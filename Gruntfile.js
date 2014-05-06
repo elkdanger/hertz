@@ -7,7 +7,7 @@ module.exports = function(grunt) {
 		clean: ["<%= output_dir %>"],
 		copy: {
 			main: {
-				src: ["<%= src_files %>", "!*proj"],
+				src: ["<%= src_files %>", "!*njsproj", "!*.sln", "!*.suo"],
 				dest: "<%= output_dir %>",
 				expand: true,
 				cwd: "src"
