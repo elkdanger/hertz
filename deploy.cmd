@@ -106,7 +106,7 @@ IF EXIST "%DEPLOYMENT_SOURCE%\Gruntfile.js" (
 	IF !ERRORLEVEL! NEQ 0 goto error
 	
 	:: 5. Run grunt	
-	call :ExecuteCmd ".\node_modules\.bin\grunt.cmd"
+	call :ExecuteCmd node_modules\.bin\grunt.cmd
 	
 	popd
 )
