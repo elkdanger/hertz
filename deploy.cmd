@@ -102,12 +102,13 @@ IF EXIST "%DEPLOYMENT_SOURCE%\package.json" (
 :: Install grunt-cli
 IF EXIST "%DEPLOYMENT_SOURCE%\Gruntfile.js" (
 	pushd "%DEPLOYMENT_SOURCE%"
-	call :ExecuteCmd !NPM_CMD! install grunt-cli
+	call :ExecuteCmd !NPM_CMD! install grunt,grunt-cli
 	IF !ERRORLEVEL! NEQ 0 goto error
 	
 	:: 5. Run grunt	
 	call :ExecuteCmd node_modules\.bin\grunt.cmd
-	
+	if !ERRORLEVEL! NEQ 0 goto error
+
 	popd
 )
 
