@@ -88,35 +88,35 @@ goto :EOF
 :Deployment
 echo Handling node.js deployment.
 
-:: 1. KuduSync
+:: Select node version
+call :SelectNodeVersion
+
+:: KuduSync
 IF /I "%IN_PLACE_DEPLOYMENT%" NEQ "1" (
   call :ExecuteCmd "%KUDU_SYNC_CMD%" -v 50 -f "%DEPLOYMENT_SOURCE%" -t "%DEPLOYMENT_TARGET%" -n "%NEXT_MANIFEST_PATH%" -p "%PREVIOUS_MANIFEST_PATH%" -i ".git;.hg;.deployment;deploy.cmd"
   IF !ERRORLEVEL! NEQ 0 goto error
 )
 
-:: 2. Select node version
-call :SelectNodeVersion
-
-:: 3. Install npm packages
-IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
-  pushd "%DEPLOYMENT_TARGET%"
+:: Install npm packages
+IF EXIST "%DEPLOYMENT_SOURCE%\package.json" (
+  pushd "%DEPLOYMENT_SOURCE%"
   call :ExecuteCmd !NPM_CMD! install --production
   IF !ERRORLEVEL! NEQ 0 goto error
   popd
 )
 
-:: 4. Install grunt-cli
-IF EXIST "%DEPLOYMENT_TARGET%\Gruntfile.js" (
-	pushd "%DEPLOYMENT_TARGET%"
-	call :ExecuteCmd !NPM_CMD! install grunt-cli
-	IF !ERRORLEVEL! NEQ 0 goto error
+:: Install grunt-cli
+IF EXIST "%DEPLOYMENT_SOURCE%\Gruntfile.js" (
+	pushd "%DEPLOYMENT_SOURCE%"
+	rem call :ExecuteCmd !NPM_CMD! install grunt grunt-cli
+	rem IF !ERRORLEVEL! NEQ 0 goto error
 	
-	:: 5. Run grunt	
+	:: Run grunt	
 	call :ExecuteCmd node_modules\.bin\grunt.cmd
-	
+	if !ERRORLEVEL! NEQ 0 goto error
+
 	popd
 )
-
 
 
 
