@@ -7,16 +7,24 @@ module.exports = function(grunt) {
 		clean: ["<%= output_dir %>"],
 		copy: {
 			main: {
-				src: ["<%= src_files %>", "!*njsproj", "!*.sln", "!*.suo"],
+				src: ["<%= src_files %>", "!*njsproj", "!*.sln", "!*.suo", "../node_modules"],
 				dest: "<%= output_dir %>",
 				expand: true,
 				cwd: "src"
+			},
+			modules: {
+			    src: "node_modules/**",
+                dest: "<%= output_dir %>"
 			}
 		}
 	});
 
-	grunt.loadNpmTasks("grunt-contrib-clean");
+	/*grunt.loadNpmTasks("grunt-contrib-clean");
 	grunt.loadNpmTasks("grunt-contrib-copy");
 
-	grunt.registerTask("default", ["clean", "copy"]);
+	grunt.registerTask("default", ["clean", "copy"]);*/
+
+	grunt.registerTask("default", function() {
+        console.log("Running Grunt..");
+	});
 }
