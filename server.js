@@ -14,6 +14,10 @@ app.use(router);
 app.set('view engine', 'html');
 app.set('layout', 'layout');
 app.set('views', __dirname + "/views");
+app.set('partials', {
+    sidebar: "_sidebar"
+});
+
 //app.enable('view cache');
 app.engine('html', require('hogan-express'));
 app.use(express.static(path.join(__dirname + "/public")));
