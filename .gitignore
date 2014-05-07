@@ -15,6 +15,7 @@ build/
 bld/
 [Bb]in/
 [Oo]bj/
+iisnode
 
 #IIS Node
 iisnode/
