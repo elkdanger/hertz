@@ -1,14 +1,13 @@
-﻿var http = require('http');
-var express = require('express');
-var connect = require('connect');
-var routes = require("./routes");
-var port = process.env.port || 1337;
-var path = require("path");
+﻿var http = require('http'),
+    express = require('express'),
+    connect = require('connect'),
+    routes = require("./controllers"),
+    port = process.env.port || 1337,
+    fs = require("fs"),
+    path = require("path");
 
 var app = express();
 var router = express.Router();
-
-router.get("/", routes.index);
 
 app.use(router);
 app.set('view engine', 'html');
@@ -16,6 +15,16 @@ app.set('layout', 'layout');
 app.set('views', __dirname + "/views");
 app.set('partials', {
     sidebar: "_sidebar"
+});
+
+// Load our controllers
+fs.readdirSync("./controllers").forEach(function (file) {
+    console.log("Processing controller:", file);
+
+    if (file.substr(-3) == ".js") {
+        route = require("./controllers/" + file);
+        route.controller(app);
+    }
 });
 
 //app.enable('view cache');
