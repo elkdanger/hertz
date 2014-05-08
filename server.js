@@ -1,7 +1,6 @@
 ﻿var http = require('http'),
     express = require('express'),
     connect = require('connect'),
-    routes = require("./controllers"),
     port = process.env.port || 1337,
     fs = require("fs"),
     path = require("path");
